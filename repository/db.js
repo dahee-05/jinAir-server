@@ -1,10 +1,10 @@
 import mysql from 'mysql2';
 
 const pool = mysql.createPool({
-    host: 'localhost', 
+    host: 'http://jinair-project.s3-website.ap-northeast-2.amazonaws.com/', 
     port: 3306,
-    user: 'root',
-    password: 'mysql1234',
+    user: 'admin',
+    password: 'shoppy-admin-1234',
     database: 'jinairdb',
 });
 
