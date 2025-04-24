@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 
 const pool = mysql.createPool({
-    host: 'http://jinair-project.s3-website.ap-northeast-2.amazonaws.com/', 
+    host: 'jinair-project.s3-website.ap-northeast-2.amazonaws.com/', 
     port: 3306,
     user: 'admin',
     password: 'shoppy-admin-1234',
