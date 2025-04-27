@@ -48,17 +48,22 @@ export const flight = (req, res) => {
 /******************
  * 최저가 조회
  *****************/   
-export const lowest = (req, res) => {
-  getConnection()
-    .then((connection) => {
-      // 날짜별 최저가를 구하는 쿼리 실행
-      return repository.getLowestPricesByDate(connection);
-    })
-    .then((rows) => {
-      res.json(rows);  // 날짜별 최저가 정보 전달
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    });
+export const lowest = async(req, res) => {
+  console.log('최저가 조회 시작');
+  console.log('컨트롤러 시작>>', req.body);
+  const result = await repository.getLowestPricesByDate(req.body);
+  res.json(result);
+  res.end();  
+  // getConnection()
+  //   .then((connection) => {
+  //     // 날짜별 최저가를 구하는 쿼리 실행
+  //     return repository.getLowestPricesByDate(connection);
+  //   })
+  //   .then((rows) => {
+  //     res.json(rows);  // 날짜별 최저가 정보 전달
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //     res.status(500).send('Internal Server Error');
+  //   });
 };

@@ -87,29 +87,47 @@ export const flight = async (flightNumber) => {
 /***************************
  * lowest 조회
  ***************************/
-export const getLowestPricesByDate = async (conn) => {
+export const getLowestPricesByDate = async (formData) => {
+  console.log('레파지토리리 시작>>', formData);
   const sql = `
-    WITH RankedFlights AS (
-  SELECT 
-    DATE(Departure_date) AS flight_date, 
-    Departure_location AS name,
-    basic_price AS min_basic_price,
-    ROW_NUMBER() OVER (PARTITION BY DATE(Departure_date) ORDER BY basic_price ASC) AS rn
-  FROM 
-    flight
-)
-SELECT 
-  flight_date,
-  name,
-  min_basic_price
-FROM 
-  RankedFlights
-WHERE 
-  rn = 1
-ORDER BY 
-  flight_date ASC;
-
-  `;
-  const [rows] = await conn.query(sql);
+   WITH RankedFlights AS ( SELECT 
+								DATE(Departure_date) AS flight_date, 
+								Departure_location AS name,
+								basic_price AS min_basic_price,
+								ROW_NUMBER() OVER (PARTITION BY DATE(Departure_date) ORDER BY basic_price ASC) AS rn
+						FROM 	flight)
+  SELECT flight_date, name, min_basic_price
+  FROM RankedFlights
+  WHERE rn = 1
+  ORDER BY flight_date ASC; `;
+  const [rows] = await db.execute(sql);
+  console.log('레파지토리2 >>>', rows);
+  
   return rows;
 };
+// export const getLowestPricesByDate = async (conn) => {
+//   const sql = `
+//     WITH RankedFlights AS (
+//   SELECT 
+//     DATE(Departure_date) AS flight_date, 
+//     Departure_location AS name,
+//     basic_price AS min_basic_price,
+//     ROW_NUMBER() OVER (PARTITION BY DATE(Departure_date) ORDER BY basic_price ASC) AS rn
+//   FROM 
+//     flight
+// )
+// SELECT 
+//   flight_date,
+//   name,
+//   min_basic_price
+// FROM 
+//   RankedFlights
+// WHERE 
+//   rn = 1
+// ORDER BY 
+//   flight_date ASC;
+
+//   `;
+//   const [rows] = await conn.query(sql);
+//   return rows;
+// };
