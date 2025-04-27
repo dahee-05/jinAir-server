@@ -49,8 +49,8 @@ export const flight = (req, res) => {
  * 최저가 조회
  *****************/   
 export const lowest = async(req, res) => {
-  console.log('최저가 조회 시작');
-  console.log('컨트롤러 시작>>', req.body);
+  // console.log('최저가 조회 시작');
+  // console.log('컨트롤러 시작>>', req.body);
   const result = await repository.getLowestPricesByDate(req.body);
   res.json(result);
   res.end();  

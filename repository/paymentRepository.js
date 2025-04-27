@@ -88,7 +88,7 @@ export const flight = async (flightNumber) => {
  * lowest 조회
  ***************************/
 export const getLowestPricesByDate = async (formData) => {
-  console.log('레파지토리리 시작>>', formData);
+  // console.log('레파지토리리 시작>>', formData);
   const sql = `
    WITH RankedFlights AS ( SELECT 
 								DATE(Departure_date) AS flight_date, 
@@ -101,7 +101,7 @@ export const getLowestPricesByDate = async (formData) => {
   WHERE rn = 1
   ORDER BY flight_date ASC; `;
   const [rows] = await db.execute(sql);
-  console.log('레파지토리2 >>>', rows);
+  // console.log('레파지토리2 >>>', rows);
   
   return rows;
 };
